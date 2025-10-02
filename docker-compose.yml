@@ -1,0 +1,33 @@
+services:
+  feed:
+    build:
+      context: .
+      dockerfile: ./apps/feed/Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - DATABASE_URL=file:./db.sql
+    volumes:
+      - ./apps/feed/prisma/db.sql:/app/apps/feed/prisma/db.sql
+
+  posts:
+    build:
+      context: .
+      dockerfile: ./apps/posts/Dockerfile
+    ports:
+      - "3002:3002"
+    environment:
+      - DATABASE_URL=file:./db.sql
+    volumes:
+      - ./apps/posts/prisma/db.sql:/app/apps/posts/prisma/db.sql
+
+  users:
+    build:
+      context: .
+      dockerfile: ./apps/users/Dockerfile
+    ports:
+      - "3001:3001"
+    environment:
+      - DATABASE_URL=file:./db.sql
+    volumes:
+      - ./apps/users/prisma/db.sql:/app/apps/users/prisma/db.sql
