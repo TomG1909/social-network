@@ -1,0 +1,61 @@
+version: '3.8'
+services:
+  users:
+    build:
+      context: .
+      dockerfile: ./apps/users/Dockerfile
+    ports:
+      - "3333:3333"
+    environment:
+      - PORT=3333
+      - DATABASE_URL=file:./prisma/dev.db
+    volumes:
+      - ./apps/users/prisma:/app/prisma
+    networks:
+      - social-network
+    restart: unless-stopped
+
+  posts:
+    build:
+      context: .
+      dockerfile: ./apps/posts/Dockerfile
+    ports:
+      - "3334:3334"
+    environment:
+      - PORT=3334
+      - DATABASE_URL=file:./prisma/dev.db
+    volumes:
+      - ./apps/posts/prisma:/app/prisma
+    networks:
+      - social-network
+    restart: unless-stopped
+
+  feed:
+    build:
+      context: .
+      dockerfile: ./apps/feed/Dockerfile
+    ports:
+      - "3335:3335"
+    environment:
+      - PORT=3335
+      - DATABASE_URL=file:./prisma/dev.db
+      - USERS_SERVICE_URL=http://users:3333
+      - POSTS_SERVICE_URL=http://posts:3334
+    volumes:
+      - ./apps/feed/prisma:/app/prisma
+    networks:
+      - social-network
+    depends_on:
+      - users
+      - posts
+    restart: unless-stopped
+
+
+networks:
+  social-network:
+    driver: bridge
+
+volumes:
+  users_data:
+  posts_data:
+  feed_data:

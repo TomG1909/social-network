@@ -4,9 +4,8 @@
     "outDir": "../../dist/out-tsc",
     "types": [
       "node",
-      "@nx/react/typings/cssmodule.d.ts",
-      "@nx/react/typings/image.d.ts",
       "vite/client"
+      // Removed "@nx/react/typings/cssmodule.d.ts" and "@nx/react/typings/image.d.ts" as they do not exist
     ]
   },
   "exclude": [

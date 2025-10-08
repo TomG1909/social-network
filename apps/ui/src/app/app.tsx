@@ -10,7 +10,7 @@ export function App() {
   const [posts, setPosts] = useState([]);
   useEffect(() => {
     const fetchPosts = async () => {
-      const response = await fetch('http://localhost:3000');
+      const response = await fetch('http://localhost:3335');
       const data = await response.json();
       setPosts(data);
     };
